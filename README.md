@@ -425,3 +425,5 @@ npm run test:ui # Run tests with UI
 ```
 
 The test suite covers database security, tool registration, permission handling, and response formatting with proper mocking of external dependencies.
+
+https://github.com/AlphaDojo/remote-mcp-server-with-auth?tab=readme-ov-file
