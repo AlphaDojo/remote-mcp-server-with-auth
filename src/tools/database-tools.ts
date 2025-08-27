@@ -1,9 +1,11 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+
 import { 
 	Props, 
 	ListTablesSchema, 
 	QueryDatabaseSchema, 
 	ExecuteDatabaseSchema,
+	ListBattersSchema,
 	createErrorResponse,
 	createSuccessResponse
 } from "../types";
@@ -13,7 +15,7 @@ import { withDatabase } from "../database/utils";
 const ALLOWED_USERNAMES = new Set<string>([
 	// Add GitHub usernames of users who should have access to database write operations
 	// For example: 'yourusername', 'coworkerusername'
-	'coleam00'
+	'AlphaDojo'
 ]);
 
 export function registerDatabaseTools(server: McpServer, env: Env, props: Props) {
@@ -152,4 +154,36 @@ export function registerDatabaseTools(server: McpServer, env: Env, props: Props)
 			}
 		);
 	}
+
+	server.tool(
+		"list_batters",
+		"List players that are of player type batter",
+		{}, // empty schema
+		async () => {
+			try {
+			return await withDatabase((env as any).DATABASE_URL, async (db) => {
+				const batters = await db.unsafe(`
+				SELECT id, first_name, last_name, team
+				FROM players
+				WHERE player_type = 'Batter'
+				ORDER BY last_name, first_name
+				`);
+
+				return {
+				type: "text",
+				name: "batters",
+				value: batters
+				};
+			});
+			} catch (error) {
+			console.error("listBatters error:", error);
+			return {
+				type: "text",
+				text: `Error retrieving batters: ${formatDatabaseError(error)}`
+			};
+			}
+		}
+		);
+
+
 }
