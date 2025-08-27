@@ -5,7 +5,6 @@ import {
 	ListTablesSchema, 
 	QueryDatabaseSchema, 
 	ExecuteDatabaseSchema,
-	ListBattersSchema,
 	createErrorResponse,
 	createSuccessResponse
 } from "../types";

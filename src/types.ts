@@ -1,6 +1,5 @@
 import { z } from "zod";
 import type { AuthRequest, OAuthHelpers, ClientInfo } from "@cloudflare/workers-oauth-provider";
-import { JSONSchema7 } from "json-schema";
 
 // User context passed through OAuth
 export type Props = {
@@ -56,10 +55,6 @@ export interface ParsedApprovalResult {
 // MCP tool schemas using Zod
 export const ListTablesSchema = {};
 
-export const ListBattersSchema: JSONSchema7 = {
-    type: "object",
-    properties: {}
-  };
 
 export const QueryDatabaseSchema = {
   sql: z
